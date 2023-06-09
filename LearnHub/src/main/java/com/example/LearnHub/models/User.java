@@ -6,6 +6,9 @@ import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
+import java.util.ArrayList;
+import java.util.List;
+
 
 @Entity
 @Table(name = "User")
@@ -30,6 +33,18 @@ public class User {
     @NotNull
     @Enumerated(EnumType.STRING)
     private SportLevel sportLevel;//Пользователь при регистрации указывает свой физический уровень
+
+    @ManyToMany
+    @JoinTable(
+            name = "user_recommendation",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "recommendation_id")
+    )
+    private List<Recommendation> recommendations = new ArrayList<>();
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<UserProgress> progress = new ArrayList<>();
+
+
 
     public User(String username, String email, String password, SportLevel sportLevel) {
         this.username = username;

@@ -15,5 +15,8 @@ public class Exercise {
     private String description;
 
 
-    private Category category;// описание упражнений
+    @ManyToOne
+    @JoinColumn(name = "category_id")
+    private Category category;
+// описание упражнений
 }

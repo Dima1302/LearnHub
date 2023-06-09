@@ -3,6 +3,7 @@ package com.example.LearnHub.models;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -18,8 +19,11 @@ public class Category {
     @Column(name = "description")
     @NotEmpty(message = "Name should not be empty")
     private String description;
-    @Column(name = "sections")
-    private List<Section> sections;
+    @OneToMany(mappedBy = "category", cascade = CascadeType.ALL, orphanRemoval = true)//mappedBy = "category" указывает,
+    // что связь управляется полем category в классе Section.
+    // Аннотация orphanRemoval = true указывает, что связанные секции будут удалены при удалении категории.
+    private List<Section> sections = new ArrayList<>();
+
 
     public Category(String name, String description, List<Section> sections) {
         this.name = name;

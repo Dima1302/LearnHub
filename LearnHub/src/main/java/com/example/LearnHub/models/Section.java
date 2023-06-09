@@ -20,6 +20,19 @@ public class Section {
     @Column(name = "materialsLink")
     private String materialsLink;
 
+    public Category getCategory() {
+        return category;
+    }
+
+    public void setCategory(Category category) {
+        this.category = category;
+    }
+
+    @ManyToOne
+    @JoinColumn(name = "category_id")
+    private Category category;
+
+
     public Section(String sectionName, String sectionDescription, String materialsLink) {
         this.sectionName = sectionName;
         this.sectionDescription = sectionDescription;
