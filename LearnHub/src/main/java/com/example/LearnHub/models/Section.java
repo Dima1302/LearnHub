@@ -1,7 +1,11 @@
 package com.example.LearnHub.models;
 
-import jakarta.persistence.*;
-import jakarta.validation.constraints.NotEmpty;
+
+
+import javax.persistence.*;
+import javax.validation.constraints.NotEmpty;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "Section")
@@ -31,6 +35,30 @@ public class Section {
     @ManyToOne
     @JoinColumn(name = "category_id")
     private Category category;
+
+    @OneToMany(mappedBy = "section", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Exercise> exercises = new ArrayList<>();
+
+    public List<Exercise> getExercises() {
+        return exercises;
+    }
+
+    public void setExercises(List<Exercise> exercises) {
+        this.exercises = exercises;
+    }
+
+
+    public List<Recommendation> getRecommendations() {
+        return recommendations;
+    }
+
+    public void setRecommendations(List<Recommendation> recommendations) {
+        this.recommendations = recommendations;
+    }
+
+    @OneToMany(mappedBy = "section", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Recommendation> recommendations = new ArrayList<>();
+
 
 
     public Section(String sectionName, String sectionDescription, String materialsLink) {

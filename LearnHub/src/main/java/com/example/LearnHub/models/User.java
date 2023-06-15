@@ -1,11 +1,12 @@
 package com.example.LearnHub.models;
 
-import jakarta.persistence.*;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotEmpty;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Size;
 
+
+import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -33,6 +34,22 @@ public class User {
     @NotNull
     @Enumerated(EnumType.STRING)
     private SportLevel sportLevel;//Пользователь при регистрации указывает свой физический уровень
+
+    public List<Recommendation> getRecommendations() {
+        return recommendations;
+    }
+
+    public void setRecommendations(List<Recommendation> recommendations) {
+        this.recommendations = recommendations;
+    }
+
+    public List<UserProgress> getProgress() {
+        return progress;
+    }
+
+    public void setProgress(List<UserProgress> progress) {
+        this.progress = progress;
+    }
 
     @ManyToMany
     @JoinTable(

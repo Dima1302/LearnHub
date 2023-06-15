@@ -1,8 +1,9 @@
 package com.example.LearnHub.models;
 
-import jakarta.persistence.*;
-import jakarta.validation.constraints.NotEmpty;
 
+
+import javax.persistence.*;
+import javax.validation.constraints.NotEmpty;
 import java.util.ArrayList;
 import java.util.List;
 

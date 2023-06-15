@@ -1,7 +1,8 @@
 package com.example.LearnHub.models;
 
-import jakarta.persistence.*;
 
+
+import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 @Entity
@@ -30,4 +31,45 @@ public class UserProgress {
     )
     private List<Recommendation> completedRecommendations = new ArrayList<>();
 
+    public UserProgress(User user, Category category, List<Recommendation> completedRecommendations) {
+        this.user = user;
+        this.category = category;
+        this.completedRecommendations = completedRecommendations;
+    }
+
+    public UserProgress() {
+
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public Category getCategory() {
+        return category;
+    }
+
+    public void setCategory(Category category) {
+        this.category = category;
+    }
+
+    public List<Recommendation> getCompletedRecommendations() {
+        return completedRecommendations;
+    }
+
+    public void setCompletedRecommendations(List<Recommendation> completedRecommendations) {
+        this.completedRecommendations = completedRecommendations;
+    }
 }
