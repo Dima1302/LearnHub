@@ -61,6 +61,28 @@ public class User {
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<UserProgress> progress = new ArrayList<>();
 
+    public List<Badge> getBadges() {
+        return badges;
+    }
+
+    public void setBadges(List<Badge> badges) {
+        this.badges = badges;
+    }
+
+    public List<Achievement> getAchievements() {
+        return achievements;
+    }
+
+    public void setAchievements(List<Achievement> achievements) {
+        this.achievements = achievements;
+    }
+
+    @ManyToMany
+    private List<Badge> badges;
+
+    @ManyToMany
+    private List<Achievement> achievements;
+
 
 
     public User(String username, String email, String password, SportLevel sportLevel) {
