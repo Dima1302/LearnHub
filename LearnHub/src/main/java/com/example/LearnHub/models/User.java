@@ -82,6 +82,11 @@ public class User {
 
     @ManyToMany
     private List<Achievement> achievements;
+    @OneToMany(mappedBy = "sender", cascade = CascadeType.ALL)
+    private List<Message> sentMessages = new ArrayList<>();
+
+    @OneToMany(mappedBy = "receiver", cascade = CascadeType.ALL)
+    private List<Message> receivedMessages = new ArrayList<>();
 
 
 

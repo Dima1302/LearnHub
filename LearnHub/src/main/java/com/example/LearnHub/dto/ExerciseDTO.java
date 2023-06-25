@@ -1,7 +1,7 @@
 package com.example.LearnHub.dto;
 
 
-import jakarta.validation.constraints.NotBlank;
+import javax.validation.constraints.NotBlank;
 
 public class ExerciseDTO {
     public int getId() {

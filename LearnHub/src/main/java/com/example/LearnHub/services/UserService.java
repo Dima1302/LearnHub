@@ -1,6 +1,7 @@
 package com.example.LearnHub.services;
 
 import com.example.LearnHub.dto.RecommendationDTO;
+import com.example.LearnHub.dto.UserDTO;
 import com.example.LearnHub.models.*;
 import com.example.LearnHub.repositories.AchievementRepository;
 import com.example.LearnHub.repositories.BadgeRepository;
@@ -62,6 +63,11 @@ public class UserService {
         return userRepository.findById(userId)
                 .orElseThrow(() -> new RuntimeException("Пользователь с указанным ID не найден"));
     }
+    public User getUserByUsername(String username) {
+        return userRepository.findByUsername(username)
+                .orElseThrow(() -> new RuntimeException("Пользователь с указанным именем пользователя не найден"));
+    }
+
 
 
     private RecommendationDTO convertToDTO(Recommendation recommendation) {
@@ -143,6 +149,13 @@ public class UserService {
         user.setAchievements(Collections.singletonList(userAchievement));
 
         userRepository.save(user);
+    }
+    public User convertToUser(UserDTO userDTO) {
+        User user = new User();
+        user.setUsername(userDTO.getUsername());
+        // Добавьте код для преобразования других полей из UserDTO в User, если такие поля есть
+
+        return user;
     }
 
 
