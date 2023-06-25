@@ -57,10 +57,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder);
     }
 
-    @Bean
-    public JwtTokenProvider jwtTokenProvider(@Value("${jwt.secret}") String secretKey, @Value("${jwt.expiration}") long expirationMs) {
-        return new JwtTokenProvider(secretKey, expirationMs);
-    }
+
 
     @Bean
     public PasswordEncoder passwordEncoder() {
