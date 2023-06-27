@@ -2,6 +2,7 @@ package com.example.LearnHub.config;
 
 
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
@@ -18,11 +19,19 @@ import java.util.Date;
 @Component
 public class JwtTokenProvider {
 
-    @Value("${jwt.secret}")
     private String secretKey;
-
-    @Value("${jwt.expiration}")
     private long expirationMs;
+    private JwtAuthenticationFilter jwtAuthenticationFilter;
+
+    public JwtTokenProvider() {
+    }
+
+    // Конструктор без параметров
+
+    @Autowired
+    public void setJwtAuthenticationFilter(JwtAuthenticationFilter jwtAuthenticationFilter) {
+        this.jwtAuthenticationFilter = jwtAuthenticationFilter;
+    }
 
     public String generateToken(UserDetails userDetails) {
         Date now = new Date();
