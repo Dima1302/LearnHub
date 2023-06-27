@@ -9,7 +9,7 @@
 	</parent>
 	<groupId>com.example</groupId>
 	<artifactId>LearnHub</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>42.3.1</version>
 	<name>LearnHub</name>
 	<description>Learning Hub application</description>
 	<properties>
