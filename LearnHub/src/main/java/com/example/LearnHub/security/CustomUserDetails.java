@@ -52,5 +52,10 @@ public class CustomUserDetails implements UserDetails {
         return user.getPassword();
     }
 
+    public User getUser() {
+        return this.user;
+    }
+}
+
     // Остальные методы UserDetails...
 }
