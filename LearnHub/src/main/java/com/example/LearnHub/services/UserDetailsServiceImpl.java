@@ -1,6 +1,6 @@
 package com.example.LearnHub.services;
 
-import com.example.LearnHub.config.UserPrincipal;
+
 import com.example.LearnHub.models.User;
 import com.example.LearnHub.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
