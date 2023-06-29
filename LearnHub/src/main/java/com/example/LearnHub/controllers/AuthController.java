@@ -1,6 +1,7 @@
 package com.example.LearnHub.controllers;
 
 
+import com.example.LearnHub.dto.UserDTO;
 import com.example.LearnHub.models.User;
 import com.example.LearnHub.services.UserService;
 import com.example.LearnHub.util.UserValidator;
@@ -31,17 +32,17 @@ public class AuthController {
     }
 
     @GetMapping("/registration")
-    public String registrationPage(@ModelAttribute("user") User user) {
+    public String registrationPage(@ModelAttribute("user") UserDTO userDTO) {
         return "auth/registration";
     }
 
     @PostMapping("/registration")
-    public String performRegistration(@ModelAttribute("person") @Valid User user, BindingResult bindingResult) {
-        personValidator.validate(user, bindingResult);
+    public String performRegistration(@ModelAttribute("user") @Valid UserDTO userDTO, BindingResult bindingResult) {
+        personValidator.validate(userDTO, bindingResult);
         if (bindingResult.hasErrors()) {
             return "auth/registration";
         }
-        userService.registerUser(user);
+        userService.registerUser(userService.convertToUser(userDTO));
         return "redirect:/auth/login";
     }
 }
