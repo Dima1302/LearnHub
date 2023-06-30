@@ -42,7 +42,8 @@ public class AuthController {
         if (bindingResult.hasErrors()) {
             return "auth/registration";
         }
-        userService.registerUser(userService.convertToUser(userDTO));
+        userService.registerNewUser(userDTO);
         return "redirect:/auth/login";
     }
+
 }

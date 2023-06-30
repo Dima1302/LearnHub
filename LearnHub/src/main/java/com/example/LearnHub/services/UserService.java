@@ -44,6 +44,10 @@ public class UserService {
         // Сохранение нового пользователя в базу данных
         return userRepository.save(newUser);
     }
+    public User registerNewUser(UserDTO userDTO) {
+        User user = convertToUser(userDTO);
+        return userRepository.save(user);
+    }
 
 
     public List<RecommendationDTO> getUserProgress(@PathVariable int userId) {
