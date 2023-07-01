@@ -9,6 +9,7 @@ import com.example.LearnHub.util.UserValidator;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 
+import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
@@ -26,13 +27,20 @@ public class AuthController {
         this.userService = userService;
     }
 
+    @GetMapping("/registration")
+    public String showRegistrationForm(Model model) {
+        model.addAttribute("user", new UserDTO()); // Добавляем атрибут "user" в модель
+        return "auth/registration";
+    }
+
+
     @PostMapping("/registration")
     public String performRegistration(@ModelAttribute("user") @RequestBody @Valid UserDTO userDTO, BindingResult bindingResult) {
         personValidator.validate(userDTO, bindingResult);
         if (bindingResult.hasErrors()) {
             return "auth/registration";
         }
-        userService.registerNewUser(userDTO); // Используйте метод registerNewUser для сохранения пользователя
+        userService.registerNewUser(userDTO);
         return "redirect:/auth/login";
     }
 
@@ -42,3 +50,4 @@ public class AuthController {
         return ResponseEntity.ok().build();
     }
 }
+
