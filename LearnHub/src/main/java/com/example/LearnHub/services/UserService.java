@@ -34,16 +34,7 @@ public class UserService {
         this.achievementRepository = achievementRepository;
     }
 
-    public User registerUser(User newUser) {
-        if (userRepository.findByUsername(newUser.getUsername()).isPresent()) {
-            throw new RuntimeException("Пользователь с таким именем пользователя уже существует");
-        }
 
-        // Дополнительные проверки и валидация данных пользователя, если требуется
-
-        // Сохранение нового пользователя в базу данных
-        return userRepository.save(newUser);
-    }
     public User registerNewUser(UserDTO userDTO) {
         User user = convertToUser(userDTO);
         return userRepository.save(user);

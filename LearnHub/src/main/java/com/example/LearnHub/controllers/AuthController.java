@@ -25,7 +25,6 @@ public class AuthController {
         this.userService = userService;
     }
 
-
     @GetMapping("/login")
     public String loginPage() {
         return "auth/login";
@@ -42,9 +41,7 @@ public class AuthController {
         if (bindingResult.hasErrors()) {
             return "auth/registration";
         }
-        userService.registerUser(userService.convertToUser(userDTO));
-        return "redirect:/"; // Перенаправление на главную страницу
+        userService.registerNewUser(userDTO); // Используйте метод registerNewUser для сохранения пользователя
+        return "redirect:/auth/login";
     }
-
-
 }
