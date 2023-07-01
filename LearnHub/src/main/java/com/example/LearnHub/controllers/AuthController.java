@@ -6,6 +6,7 @@ import com.example.LearnHub.models.User;
 import com.example.LearnHub.services.UserService;
 import com.example.LearnHub.util.UserValidator;
 
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 
 import org.springframework.validation.BindingResult;
@@ -25,23 +26,19 @@ public class AuthController {
         this.userService = userService;
     }
 
-    @GetMapping("/login")
-    public String loginPage() {
-        return "auth/login";
-    }
-
-    @GetMapping("/registration")
-    public String registrationPage(@ModelAttribute("user") UserDTO userDTO) {
-        return "auth/registration";
-    }
-
     @PostMapping("/registration")
-    public String performRegistration(@ModelAttribute("user") @Valid UserDTO userDTO, BindingResult bindingResult) {
+    public String performRegistration(@ModelAttribute("user") @RequestBody @Valid UserDTO userDTO, BindingResult bindingResult) {
         personValidator.validate(userDTO, bindingResult);
         if (bindingResult.hasErrors()) {
             return "auth/registration";
         }
         userService.registerNewUser(userDTO); // Используйте метод registerNewUser для сохранения пользователя
         return "redirect:/auth/login";
+    }
+
+    @PostMapping("/login")
+    public ResponseEntity<?> login(@RequestBody UserDTO userDTO) {
+        // остальной код метода...
+        return ResponseEntity.ok().build();
     }
 }
