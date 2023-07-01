@@ -9,6 +9,7 @@ import com.example.LearnHub.repositories.RecommendationRepository;
 import com.example.LearnHub.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.ArrayList;
@@ -35,6 +36,7 @@ public class UserService {
     }
 
 
+    @Transactional
     public User registerNewUser(UserDTO userDTO) {
         User user = convertToUser(userDTO);
         return userRepository.save(user);
