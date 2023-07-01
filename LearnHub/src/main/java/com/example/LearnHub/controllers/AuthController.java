@@ -42,8 +42,9 @@ public class AuthController {
         if (bindingResult.hasErrors()) {
             return "auth/registration";
         }
-        userService.registerNewUser(userDTO);
-        return "redirect:/auth/login";
+        userService.registerUser(userService.convertToUser(userDTO));
+        return "redirect:/"; // Перенаправление на главную страницу
     }
+
 
 }

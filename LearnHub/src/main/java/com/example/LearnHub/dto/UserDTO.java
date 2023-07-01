@@ -1,20 +1,22 @@
 package com.example.LearnHub.dto;
 
 
+import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
 
 public class UserDTO {
 
-    @NotEmpty(message = "Name should not be empty")
+
+    @NotBlank(message = "Имя пользователя не может быть пустым")
     @Size(min = 2, max = 30, message = "Name should be between 2 and 30 characters")
     private String username;
 
-    @NotEmpty(message = "Email should not be empty")
+    @NotBlank(message = "Email не может быть пустым")
+    @Email(message = "Некорректный формат email")
     private String email;
-
-    @NotBlank(message = "Password cannot be empty")
+    @NotBlank(message = "Пароль не может быть пустым")
     private String password;
 
     private int id;
