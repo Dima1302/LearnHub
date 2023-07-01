@@ -27,12 +27,13 @@ public class User implements UserDetails {
     @Column(name = "username")
     @NotEmpty(message = "Name should not be empty")
     @Size(min = 2,max = 30,message = "Name should be between 2 and 30 characters")
+
     private String username;
-    @Column(name = "email")
+    @Column(name = "email", nullable = false)
     @NotEmpty(message = "Email should not be empty")
     private String email;
 
-    @Column(name = "password")
+    @Column(name = "password", nullable = false)
     @NotBlank(message = "Password cannot be empty")
     private String password;
 
