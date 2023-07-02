@@ -3,7 +3,7 @@ package com.example.LearnHub.models;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "Message")
+@Table(name = "Messages")
 public class Message {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

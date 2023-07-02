@@ -3,7 +3,7 @@ package com.example.LearnHub.models;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "Achievement")
+@Table(name = "Achievements")
 public class Achievement {
     // модель "достижение"
     @Id

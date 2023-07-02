@@ -3,7 +3,7 @@ package com.example.LearnHub.models;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "Badge")
+@Table(name = "Badges")
 public class Badge {
     // модель "бейдж" для реализации системы наград
     @Id
