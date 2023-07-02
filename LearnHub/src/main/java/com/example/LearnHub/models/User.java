@@ -40,7 +40,21 @@ public class User implements UserDetails {
     @ElementCollection(fetch = FetchType.EAGER)
     private List<String> roles;
 
+    public User(String username, String email, String password, SportLevel sportLevel) {
+        this.username = username;
+        this.email = email;
+        this.password = password;
+        this.sportLevel = sportLevel;
+    }
 
+    // Добавляем конструктор без параметров для JPA
+    public User() {
+    }
+
+    // Добавляем сеттер для поля email
+    public void setEmail(String email) {
+        this.email = email;
+    }
     public List<String> getRoles() {
         return roles;
     }
@@ -108,16 +122,9 @@ public class User implements UserDetails {
 
 
 
-    public User(String username, String email, String password, SportLevel sportLevel) {
-        this.username = username;
-        this.email = email;
-        this.password = password;
-        this.sportLevel = sportLevel;
-    }
 
-    public User() {
 
-    }
+
 
     public int getId() {
         return id;
@@ -159,9 +166,7 @@ public class User implements UserDetails {
         return email;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
-    }
+
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

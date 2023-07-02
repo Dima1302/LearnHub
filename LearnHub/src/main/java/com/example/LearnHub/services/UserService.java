@@ -65,7 +65,10 @@ public class UserService {
                 .orElseThrow(() -> new RuntimeException("Пользователь с указанным именем пользователя не найден"));
     }
 
-
+    public User createUser(UserDTO userDTO) {
+        User user = convertToUser(userDTO);
+        return userRepository.save(user);
+    }
 
     private RecommendationDTO convertToDTO(Recommendation recommendation) {
         RecommendationDTO recommendationDTO = new RecommendationDTO();
@@ -147,13 +150,15 @@ public class UserService {
 
         userRepository.save(user);
     }
-    public User convertToUser(UserDTO userDTO) {
+    private User convertToUser(UserDTO userDTO) {
         User user = new User();
         user.setUsername(userDTO.getUsername());
+        user.setEmail(userDTO.getEmail()); // Добавляем email из UserDTO
+        user.setPassword(userDTO.getPassword()); // Добавляем password из UserDTO
         // Добавьте код для преобразования других полей из UserDTO в User, если такие поля есть
-
         return user;
     }
+
 
 
 }

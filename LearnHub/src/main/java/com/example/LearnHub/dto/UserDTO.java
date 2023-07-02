@@ -1,6 +1,8 @@
 package com.example.LearnHub.dto;
 
 
+import com.example.LearnHub.models.User;
+
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
@@ -19,7 +21,15 @@ public class UserDTO {
     @NotBlank(message = "Пароль не может быть пустым")
     private String password;
 
+    public User.SportLevel getSportLevel() {
+        return sportLevel;
+    }
+
+    private User.SportLevel sportLevel;
+
     private int id;
+
+
 
 
     public int getId() {

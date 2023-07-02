@@ -27,12 +27,7 @@ public class AuthController {
         this.userService = userService;
     }
 
-    @GetMapping("/registration")
-    public String showRegistrationForm(Model model) {
-        model.addAttribute("user", new UserDTO()); // Добавляем атрибут "user" в модель
-        return "auth/registration";
-    }
-
+    // Остальные методы контроллера без изменений
 
     @PostMapping("/registration")
     public String performRegistration(@ModelAttribute("user") @RequestBody @Valid UserDTO userDTO, BindingResult bindingResult) {
@@ -40,14 +35,19 @@ public class AuthController {
         if (bindingResult.hasErrors()) {
             return "auth/registration";
         }
-        userService.registerNewUser(userDTO);
+
+        userService.createUser(userDTO); // Используем метод createUser из UserService, передавая userDTO
+
         return "redirect:/auth/login";
     }
 
-    @PostMapping("/login")
-    public ResponseEntity<?> login(@RequestBody UserDTO userDTO) {
-        // остальной код метода...
-        return ResponseEntity.ok().build();
+
+    private User convertUserDtoToUser(UserDTO userDTO) {
+        // Преобразование UserDTO в User
+        User user = new User();
+        user.setUsername(userDTO.getUsername());
+        user.setPassword(userDTO.getPassword());
+        user.setSportLevel(userDTO.getSportLevel());
+        return user;
     }
 }
-
