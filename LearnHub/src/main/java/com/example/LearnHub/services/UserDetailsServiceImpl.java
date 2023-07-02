@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 import javax.management.relation.Role;
 import java.util.Collection;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -28,19 +29,20 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        User user = userRepository.findByUsername(username)
-                .orElseThrow(() -> new UsernameNotFoundException("User not found"));
+        Optional<User> userOptional = userRepository.findByUsername(username);
+        User user = userOptional.orElseThrow(() -> new UsernameNotFoundException("User not found with username: " + username));
 
         return new org.springframework.security.core.userdetails.User(
                 user.getUsername(),
                 user.getPassword(),
                 user.isEnabled(),
-                user.isAccountNonExpired(),
-                user.isCredentialsNonExpired(),
-                user.isAccountNonLocked(),
+                true,
+                true,
+                true,
                 getAuthorities(user.getRoles())
         );
     }
+
 
     private Collection<? extends GrantedAuthority> getAuthorities(List<String> roles) {
         return roles.stream()
@@ -48,4 +50,3 @@ public class UserDetailsServiceImpl implements UserDetailsService {
                 .collect(Collectors.toList());
     }
 }
-

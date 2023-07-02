@@ -36,7 +36,7 @@ public class User implements UserDetails {
     @Column(name = "password", nullable = false)
     @NotBlank(message = "Password cannot be empty")
     private String password;
-
+    @Column(name = "roles")
     @ElementCollection(fetch = FetchType.EAGER)
     private List<String> roles;
 
@@ -138,17 +138,17 @@ public class User implements UserDetails {
 
     @Override
     public boolean isAccountNonLocked() {
-        return false;
+        return true;
     }
 
     @Override
     public boolean isCredentialsNonExpired() {
-        return false;
+        return true;
     }
 
     @Override
     public boolean isEnabled() {
-        return false;
+        return true;
     }
 
     public void setUsername(String username) {

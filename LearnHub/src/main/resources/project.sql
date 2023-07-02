@@ -3,7 +3,8 @@ CREATE TABLE IF NOT EXISTS users (
                                      id SERIAL PRIMARY KEY,
                                      username VARCHAR(30) NOT NULL,
     email VARCHAR(100) NOT NULL,
-    password VARCHAR(100) NOT NULL
+    password VARCHAR(100) NOT NULL,
+    roles TEXT[] -- Добавленный столбец для хранения ролей пользователей
     );
 
 -- Создание таблицы messages
