@@ -20,11 +20,8 @@ import java.util.stream.Collectors;
 @Service
 public class UserService {
     private final UserRepository userRepository;
-
     private final RecommendationRepository recommendationRepository;
-
     private final BadgeRepository badgeRepository;
-
     private final AchievementRepository achievementRepository;
 
     @Autowired
@@ -35,31 +32,26 @@ public class UserService {
         this.achievementRepository = achievementRepository;
     }
 
-
     @Transactional
     public User registerNewUser(UserDTO userDTO) {
         User user = convertToUser(userDTO);
         return userRepository.save(user);
     }
 
-
-    public List<RecommendationDTO> getUserProgress(@PathVariable int userId) {
-        User user = userRepository.findById(userId)
-                .orElseThrow(() -> new RuntimeException("Пользователь с указанным ID не найден"));
-
+    public List<RecommendationDTO> getUserProgress(int userId) {
+        User user = getUserById(userId);
         List<Recommendation> userRecommendations = user.getRecommendations();
 
-        List<RecommendationDTO> recommendationDTOs = userRecommendations.stream()
+        return userRecommendations.stream()
                 .map(this::convertToDTO)
                 .collect(Collectors.toList());
-
-        return recommendationDTOs;
     }
 
     public User getUserById(int userId) {
         return userRepository.findById(userId)
                 .orElseThrow(() -> new RuntimeException("Пользователь с указанным ID не найден"));
     }
+
     public User getUserByUsername(String username) {
         return userRepository.findByUsername(username)
                 .orElseThrow(() -> new RuntimeException("Пользователь с указанным именем пользователя не найден"));
@@ -80,34 +72,19 @@ public class UserService {
     }
 
     public void completeRecommendation(int userId, int recommendationId) {
-        // Находим пользователя по userId в репозитории
-        User user = userRepository.findById(userId)
-                .orElseThrow(() -> new RuntimeException("Пользователь с указанным ID не найден"));
-
-        // Ищем рекомендацию по recommendationId в списке рекомендаций пользователя
-        Recommendation recommendation = user.getRecommendations().stream()
-                .filter(rec -> rec.getId() == recommendationId)
-                .findFirst()
+        User user = getUserById(userId);
+        Recommendation recommendation = recommendationRepository.findById(recommendationId)
                 .orElseThrow(() -> new RuntimeException("Рекомендация с указанным ID не найдена"));
 
-        // Получаем категорию из найденной рекомендации
         Category category = recommendation.getCategory();
-
-        // Создаем объект UserProgress с переданными параметрами: пользователь, категория и список завершенных рекомендаций
         UserProgress userProgress = new UserProgress(user, category, Collections.singletonList(recommendation));
-
-        // Добавляем созданный объект UserProgress в список прогресса пользователя
         user.getProgress().add(userProgress);
 
-        // Сохраняем изменения в репозитории
         userRepository.save(user);
     }
 
-
     public void assignBadgeToUser(int userId) {
-        User user = userRepository.findById(userId)
-                .orElseThrow(() -> new RuntimeException("Пользователь с указанным ID не найден"));
-
+        User user = getUserById(userId);
         int numMaterialsStudied = user.getRecommendations().size();
         int numExercisesCompleted = user.getProgress().stream()
                 .mapToInt(progress -> progress.getCompletedRecommendations().size())
@@ -126,12 +103,8 @@ public class UserService {
         userRepository.save(user);
     }
 
-
-
     public void completeAchievement(int userId) {
-        User user = userRepository.findById(userId)
-                .orElseThrow(() -> new RuntimeException("Пользователь с указанным ID не найден"));
-
+        User user = getUserById(userId);
         int numBadges = user.getBadges().size();
         String achievement = "";
 
@@ -150,16 +123,15 @@ public class UserService {
 
         userRepository.save(user);
     }
+
     private User convertToUser(UserDTO userDTO) {
         User user = new User();
         user.setUsername(userDTO.getUsername());
-        user.setEmail(userDTO.getEmail()); // Добавляем email из UserDTO
-        user.setPassword(userDTO.getPassword()); // Добавляем password из UserDTO
+        user.setEmail(userDTO.getEmail());
+        user.setPassword(userDTO.getPassword());
+        user.setSportLevel(userDTO.getSportLevel());
         // Добавьте код для преобразования других полей из UserDTO в User, если такие поля есть
         return user;
     }
-
-
-
 }
 

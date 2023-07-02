@@ -26,6 +26,12 @@ public class AuthController {
         this.personValidator = personValidator;
         this.userService = userService;
     }
+    @GetMapping("/registration")
+    public String showRegistrationForm(Model model) {
+        model.addAttribute("user", new UserDTO());
+        return "auth/registration";
+    }
+
 
     // Остальные методы контроллера без изменений
 
@@ -39,6 +45,11 @@ public class AuthController {
         userService.createUser(userDTO); // Используем метод createUser из UserService, передавая userDTO
 
         return "redirect:/auth/login";
+    }
+    @PostMapping("/login")
+    public ResponseEntity<?> login(@RequestBody UserDTO userDTO) {
+        // остальной код метода...
+        return ResponseEntity.ok().build();
     }
 
 

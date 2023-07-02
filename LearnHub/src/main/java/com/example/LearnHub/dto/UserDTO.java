@@ -25,6 +25,10 @@ public class UserDTO {
         return sportLevel;
     }
 
+    public void setSportLevel(User.SportLevel sportLevel) {
+        this.sportLevel = sportLevel;
+    }
+
     private User.SportLevel sportLevel;
 
     private int id;
