@@ -59,10 +59,11 @@ public class AuthController {
 
 
     @PostMapping("/login")
-    public String login() {
+    public String login(@ModelAttribute("user") UserDTO userDTO) {
         // остальной код метода...
-        return "redirect:/home"; // замените "home" на вашу целевую страницу
+        return "redirect:/home";
     }
+
 
 
 
