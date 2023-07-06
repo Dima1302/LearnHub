@@ -71,6 +71,10 @@ public class AuthController {
         model.addAttribute("user", new UserDTO());
         return "auth/login";
     }
+    @GetMapping("/home")
+    public String showHomePage() {
+        return "home";
+    }
 
 
 
