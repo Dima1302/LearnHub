@@ -7,6 +7,7 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
+import java.util.List;
 
 public class UserDTO {
 
@@ -20,6 +21,16 @@ public class UserDTO {
     private String email;
     @NotBlank(message = "Пароль не может быть пустым")
     private String password;
+
+    public List<String> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(List<String> roles) {
+        this.roles = roles;
+    }
+
+    private List<String> roles;
 
     public User.SportLevel getSportLevel() {
         return sportLevel;

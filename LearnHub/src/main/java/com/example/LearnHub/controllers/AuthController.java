@@ -7,6 +7,8 @@ import com.example.LearnHub.services.UserService;
 import com.example.LearnHub.util.UserValidator;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 
 import org.springframework.ui.Model;
@@ -16,6 +18,9 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.util.Collections;
+
 @Controller
 @RequestMapping("/auth")
 public class AuthController {
@@ -27,6 +32,7 @@ public class AuthController {
     // остальной код контроллера
 
     @PostMapping("/registration")
+    @Secured("ROLE_ANONYMOUS")
     public String performRegistration(@ModelAttribute("user") @RequestBody @Valid UserDTO userDTO, BindingResult bindingResult) {
         logger.debug("Performing user registration...");
 
@@ -36,6 +42,7 @@ public class AuthController {
             return "auth/registration";
         }
 
+        userDTO.setRoles(Collections.singletonList("ROLE_USER")); // Добавить эту строку
         userService.createUser(userDTO);
         logger.debug("User registration successful. Redirecting to /auth/login");
         return "redirect:/auth/login";
@@ -59,6 +66,7 @@ public class AuthController {
 
 
     @PostMapping("/login")
+    @Secured("ROLE_ANONYMOUS")
     public String login(@ModelAttribute("user") UserDTO userDTO) {
         // остальной код метода...
         return "redirect:/home";
@@ -68,14 +76,20 @@ public class AuthController {
 
 
     @GetMapping("/login")
+    @Secured("ROLE_ANONYMOUS")
     public String showLoginForm(Model model) {
         model.addAttribute("user", new UserDTO());
         return "auth/login";
     }
+
     @GetMapping("/home")
+    @Secured("ROLE_ANONYMOUS")
     public String showHomePage() {
         return "home";
     }
+
+
+
 
 
 
